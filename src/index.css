@@ -1,0 +1,61 @@
+:root {
+  --copper: #C06A38;
+  --copper-deep: #74371B;
+  --copper-bright: #D9895A;
+  --gold: #D6A855;
+  --void: #08070A;
+  --bg: #0E0C10;
+  --surface: #17151B;
+  --surface-2: #1E1B22;
+  --cream: #221E26;
+  --ink: #F4EFE9;
+  --ink-soft: #C8BFB4;
+  --muted: #9A9088;
+  --muted-2: #6E655F;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --danger: #FF7A55;
+  --on-light: #1A1108;
+  --logo-chip: #F2EDE6;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 600;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+}
