@@ -34,6 +34,7 @@ export default function Layout() {
       <header className="site-header">
         <div className="site-header-inner">
           <Link to="/" className="brand">
+            <img src="/favicon.svg" alt="" className="brand-badge" aria-hidden="true" />
             <span className="brand-title-lg">{EVENT.title}</span>
           </Link>
           <nav className="site-nav">
@@ -54,7 +55,7 @@ export default function Layout() {
         <div className="site-footer-inner">
           <div className="footer-top">
             <div className="footer-brand">
-              <span className="brand-badge" aria-hidden="true">Logo</span>
+              <img src="/favicon.svg" alt="" className="brand-badge" aria-hidden="true" />
               <div>
                 <div className="brand-title">{EVENT.title}</div>
                 <div className="brand-org">{EVENT.tagline}</div>
