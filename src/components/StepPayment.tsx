@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { updatePayment, goToStep, setPendingPayment, submitRegistration } from '../store/registrationSlice';
+import { updatePayment, goToStep, setPendingPayment } from '../store/registrationSlice';
 import { RACE_CATEGORIES } from '../types';
 import type { MobileMoneyProvider } from '../types';
-import { fetchRaceFee, fetchBankDetails, submitRegistrationDetails, initiatePayment } from '../api/registrationApi';
-import type { BankDetails } from '../api/registrationApi';
-import { MtnLogo, AirtelLogo, ZamtelLogo, BankTransferLogo, VisaLogo, MastercardLogo, AmexLogo } from './PaymentLogos';
+import { fetchRaceFee, submitRegistrationDetails, initiatePayment } from '../api/registrationApi';
+import { MtnLogo, AirtelLogo, ZamtelLogo, VisaLogo, MastercardLogo, AmexLogo } from './PaymentLogos';
 import Spinner from './Spinner';
 
 const PROVIDERS: { value: MobileMoneyProvider; label: string; Logo: typeof MtnLogo }[] = [
@@ -20,7 +19,6 @@ export default function StepPayment() {
   const category = RACE_CATEGORIES.find((c) => c.value === details.raceCategory);
 
   const [fee, setFee] = useState<number | null | undefined>(undefined);
-  const [bankDetails, setBankDetails] = useState<BankDetails | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
@@ -35,20 +33,12 @@ export default function StepPayment() {
     };
   }, [details.raceCategory]);
 
-  useEffect(() => {
-    if (payment.method === 'bank-transfer' && !bankDetails) {
-      fetchBankDetails().then(setBankDetails).catch(() => {});
-    }
-  }, [payment.method, bankDetails]);
-
-  // Prefill the payment-specific fields from the details step once, so the
-  // runner doesn't have to retype anything they already gave us — but
-  // both stay editable here since the number that receives the Lipila
-  // prompt, or the name a bank transfer will show up under, isn't always
-  // the same as the contact details entered earlier.
+  // Prefill the payment-specific field from the details step once, so the
+  // runner doesn't have to retype anything they already gave us — but it
+  // stays editable here since the number that receives the Lipila prompt
+  // isn't always the same as the contact details entered earlier.
   useEffect(() => {
     if (!payment.phoneNumber) dispatch(updatePayment({ phoneNumber: details.phone }));
-    if (!payment.payerName) dispatch(updatePayment({ payerName: details.fullName }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -63,10 +53,6 @@ export default function StepPayment() {
       setSubmitError('Please enter the phone number that will receive the payment prompt.');
       return;
     }
-    if (payment.method === 'bank-transfer' && !(payment.payerName || '').trim()) {
-      setSubmitError('Please enter the name the transfer will be made from.');
-      return;
-    }
     if (
       payment.method === 'card' &&
       (!(payment.city || '').trim() || !(payment.address || '').trim() || !(payment.zipCode || '').trim())
@@ -79,15 +65,7 @@ export default function StepPayment() {
     try {
       const registration = await submitRegistrationDetails(details);
 
-      if (payment.method === 'bank-transfer') {
-        await initiatePayment({
-          registrationId: registration.registrationId,
-          paymentMethod: 'BANK_TRANSFER',
-          payerName: payment.payerName,
-          transferReference: payment.transferReference,
-        });
-        dispatch(submitRegistration({ reference: registration.reference, status: 'pending-bank-transfer' }));
-      } else if (payment.method === 'card') {
+      if (payment.method === 'card') {
         const backUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
         const pay = await initiatePayment({
           registrationId: registration.registrationId,
@@ -168,7 +146,7 @@ export default function StepPayment() {
 
       <div className="field">
         <span className="field-label">Payment method</span>
-        <div className="segmented segmented-3">
+        <div className="segmented segmented-2">
           <button
             type="button"
             className={payment.method === 'mobile-money' ? 'active' : ''}
@@ -182,13 +160,6 @@ export default function StepPayment() {
             onClick={() => dispatch(updatePayment({ method: 'card' }))}
           >
             Card
-          </button>
-          <button
-            type="button"
-            className={payment.method === 'bank-transfer' ? 'active' : ''}
-            onClick={() => dispatch(updatePayment({ method: 'bank-transfer' }))}
-          >
-            Bank transfer
           </button>
         </div>
       </div>
@@ -283,55 +254,6 @@ export default function StepPayment() {
         </>
       )}
 
-      {payment.method === 'bank-transfer' && (
-        <>
-          <div className="bank-details-header">
-            <BankTransferLogo size={24} />
-            <span>Bank transfer</span>
-          </div>
-          {bankDetails ? (
-            <div className="bank-details">
-              <div className="summary-row"><span>Bank</span><strong>{bankDetails.bank_name}</strong></div>
-              <div className="summary-row"><span>Account name</span><strong>{bankDetails.account_name}</strong></div>
-              <div className="summary-row"><span>Account number</span><strong>{bankDetails.account_number}</strong></div>
-              {bankDetails.branch && <div className="summary-row"><span>Branch</span><strong>{bankDetails.branch}</strong></div>}
-              {bankDetails.sort_code && <div className="summary-row"><span>Sort code</span><strong>{bankDetails.sort_code}</strong></div>}
-              {bankDetails.swift_code && <div className="summary-row"><span>Swift code</span><strong>{bankDetails.swift_code}</strong></div>}
-              <p className="hint">Use your name and reference as the transfer narration. We'll confirm your entry once the transfer is received.</p>
-            </div>
-          ) : (
-            <p className="hint"><Spinner size={13} /> Loading bank details…</p>
-          )}
-
-          <div className="field">
-            <label className="field-label" htmlFor="payer-name">
-              Name the transfer will be made from<span className="req">*</span>
-            </label>
-            <input
-              id="payer-name"
-              type="text"
-              placeholder="As it appears on your bank statement"
-              value={payment.payerName || ''}
-              onChange={(e) => dispatch(updatePayment({ payerName: e.target.value }))}
-            />
-          </div>
-
-          <div className="field">
-            <label className="field-label" htmlFor="transfer-reference">
-              Transaction reference <span className="optional">(optional)</span>
-            </label>
-            <input
-              id="transfer-reference"
-              type="text"
-              placeholder="Bank's reference number, if you have it"
-              value={payment.transferReference || ''}
-              onChange={(e) => dispatch(updatePayment({ transferReference: e.target.value }))}
-            />
-            <span className="field-hint">Helps us match your transfer faster — add it once you've completed the transfer if you don't have it yet.</span>
-          </div>
-        </>
-      )}
-
       {submitError && <p className="error">{submitError}</p>}
 
       <div className="actions actions-stack">
@@ -339,14 +261,8 @@ export default function StepPayment() {
           {submitting ? (
             <span className="btn-loading">
               <Spinner size={14} />{' '}
-              {payment.method === 'bank-transfer'
-                ? 'Submitting…'
-                : payment.method === 'card'
-                  ? 'Redirecting to checkout…'
-                  : 'Sending prompt…'}
+              {payment.method === 'card' ? 'Redirecting to checkout…' : 'Sending prompt…'}
             </span>
-          ) : payment.method === 'bank-transfer' ? (
-            'Submit registration'
           ) : payment.method === 'card' ? (
             fee ? `Pay by card — K${fee.toFixed(2)}` : 'Continue to card checkout'
           ) : fee ? (

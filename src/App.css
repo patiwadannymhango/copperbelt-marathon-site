@@ -518,12 +518,12 @@ textarea {
   color: #fff;
 }
 
-.segmented-3 {
+.segmented-2 {
   width: 100%;
   display: flex;
 }
 
-.segmented-3 button {
+.segmented-2 button {
   flex: 1;
 }
 
@@ -607,13 +607,6 @@ textarea {
 
 .summary-row-block {
   margin: 16px 0;
-}
-
-.bank-details {
-  background: var(--cream);
-  border-radius: 8px;
-  padding: 4px 14px;
-  margin: 4px 0 20px;
 }
 
 .check-badge {

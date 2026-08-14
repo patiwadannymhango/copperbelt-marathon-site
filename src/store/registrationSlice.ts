@@ -22,8 +22,6 @@ const initialPayment: PaymentInfo = {
   method: 'mobile-money',
   provider: '',
   phoneNumber: '',
-  payerName: '',
-  transferReference: '',
   city: '',
   address: '',
   zipCode: '',

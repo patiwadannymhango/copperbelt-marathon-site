@@ -81,34 +81,6 @@ export async function fetchRaceFee(categoryValue: string): Promise<number | null
   return price > 0 ? price : null;
 }
 
-export interface BankDetails {
-  bank_name: string;
-  account_name: string;
-  account_number: string;
-  branch: string;
-  sort_code: string;
-  swift_code: string;
-}
-
-let bankDetailsPromise: Promise<BankDetails> | null = null;
-
-/** Bank account details for the "Bank Transfer" payment method — kept on
- * the backend so they can be corrected without a frontend deploy. */
-export function fetchBankDetails(): Promise<BankDetails> {
-  if (!bankDetailsPromise) {
-    bankDetailsPromise = fetch(`${API_BASE_URL}/api/v1/payments/public/bank-details/`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to load bank details');
-        return res.json();
-      })
-      .catch((err) => {
-        bankDetailsPromise = null;
-        throw err;
-      });
-  }
-  return bankDetailsPromise;
-}
-
 export interface SubmitRegistrationResult {
   registrationId: string;
   reference: string;
@@ -184,10 +156,8 @@ export async function submitRegistrationDetails(
 
 export interface InitiatePaymentParams {
   registrationId: string;
-  paymentMethod: 'MTN_MONEY' | 'AIRTEL_MONEY' | 'ZAMTEL_KWACHA' | 'CARD' | 'BANK_TRANSFER';
+  paymentMethod: 'MTN_MONEY' | 'AIRTEL_MONEY' | 'ZAMTEL_KWACHA' | 'CARD';
   phoneNumber?: string;
-  payerName?: string;
-  transferReference?: string;
   city?: string;
   address?: string;
   zipCode?: string;
@@ -210,8 +180,6 @@ export interface InitiatePaymentResult {
  *  - Card: sends a Lipila collection request and resolves with a
  *    `redirectUrl` — the caller must navigate the browser there (Lipila's
  *    own PCI-compliant hosted checkout; we never touch the card number).
- *  - Bank transfer: just records the payer's name/reference so an admin
- *    can reconcile it later; no Lipila call, resolves immediately.
  */
 export async function initiatePayment(
   params: InitiatePaymentParams
@@ -224,8 +192,6 @@ export async function initiatePayment(
       body: JSON.stringify({
         payment_method: params.paymentMethod,
         phone_number: params.phoneNumber || '',
-        payer_name: params.payerName || '',
-        transfer_reference: params.transferReference || '',
         city: params.city || '',
         address: params.address || '',
         zip_code: params.zipCode || '',
@@ -239,7 +205,6 @@ export async function initiatePayment(
     const detail =
       errorBody?.detail ||
       errorBody?.phone_number?.[0] ||
-      errorBody?.payer_name?.[0] ||
       errorBody?.city?.[0] ||
       errorBody?.address?.[0] ||
       errorBody?.zip_code?.[0] ||

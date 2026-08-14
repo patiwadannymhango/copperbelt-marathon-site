@@ -38,18 +38,6 @@ export function ZamtelLogo({ size = 28 }: { size?: number }) {
   );
 }
 
-export function BankTransferLogo({ size = 28 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-label="Bank transfer">
-      <circle cx="16" cy="16" r="16" fill="#1F3A5F" />
-      <path
-        d="M16 7l8 4.5v1.5H8v-1.5L16 7zM9 14h2v8H9v-8zm4 0h2v8h-2v-8zm4 0h2v8h-2v-8zm4 0h2v8h-2v-8zM8 23h16v2H8v-2z"
-        fill="#fff"
-      />
-    </svg>
-  );
-}
-
 export function VisaLogo({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size * 0.64} viewBox="0 0 32 20.5" aria-label="Visa">

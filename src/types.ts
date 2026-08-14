@@ -24,7 +24,7 @@ export type Gender = '' | 'male' | 'female';
 export type AgeRange = '' | 'under-18' | '18-29' | '30-39' | '40-49' | '50-59' | '60-plus';
 export type TShirtSize = '' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | '3XL' | '4XL' | '5XL';
 export type AttendanceType = 'in-person' | 'virtual';
-export type PaymentMethod = 'mobile-money' | 'card' | 'bank-transfer';
+export type PaymentMethod = 'mobile-money' | 'card';
 export type MobileMoneyProvider = '' | 'MTN_MONEY' | 'AIRTEL_MONEY' | 'ZAMTEL_KWACHA';
 export type RegistrationStatus = 'confirmed' | 'pending-bank-transfer' | 'processing' | 'failed';
 
@@ -49,8 +49,6 @@ export interface PaymentInfo {
   method: PaymentMethod;
   provider?: MobileMoneyProvider;
   phoneNumber?: string;
-  payerName?: string;
-  transferReference?: string;
   city?: string;
   address?: string;
   zipCode?: string;
