@@ -15,11 +15,11 @@ export const STATS = [
   { value: '4', label: 'Race distances' },
   { value: '42.2km', label: 'Full marathon' },
   { value: 'K500k', label: 'Prize fund' },
-  { value: '6,000+', label: 'Runners expected' },
+  { value: '6,000+', label: 'Runners and Spectators' },
 ];
 
 export const COUNTERS = [
-  { target: 6000, suffix: '+', label: 'Runners expected' },
+  { target: 6000, suffix: '+', label: 'Runners and Spectators' },
   // { target: 15000, suffix: '+', label: 'Spectators expected' },
   { target: 500000, prefix: 'K', label: 'Prize fund' },
   { target: 300, suffix: '+', label: 'Volunteers on course' },
