@@ -53,14 +53,25 @@ export const PACKAGE_ITEMS = [
   'Official event T-shirt',
   'Finisher medal',
   'Running cap',
-  'Performance running socks',
-  'Arm sleeves',
   'Race bib number',
   'Electronic timing',
   'Finisher certificate',
   'Hydration support',
   'Medical support',
 ];
+
+// export const PACKAGE_ITEMS = [
+//   'Official event T-shirt',
+//   'Finisher medal',
+//   'Running cap',
+//   'Performance running socks',
+//   'Arm sleeves',
+//   'Race bib number',
+//   'Electronic timing',
+//   'Finisher certificate',
+//   'Hydration support',
+//   'Medical support',
+// ];
 
 export const PRIZE_ITEMS = [
   'Cash prizes',
