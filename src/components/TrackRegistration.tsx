@@ -28,7 +28,7 @@ export default function TrackRegistration() {
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="e.g. MKB-04213 or your email"
+          placeholder="e.g. COPPER-0043 or your email"
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         />
         <button className="btn-primary" onClick={handleSearch} disabled={searching}>
