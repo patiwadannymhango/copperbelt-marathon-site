@@ -20,7 +20,7 @@ export const STATS = [
 
 export const COUNTERS = [
   { target: 6000, suffix: '+', label: 'Runners expected' },
-  { target: 15000, suffix: '+', label: 'Spectators expected' },
+  // { target: 15000, suffix: '+', label: 'Spectators expected' },
   { target: 500000, prefix: 'K', label: 'Prize fund' },
   { target: 300, suffix: '+', label: 'Volunteers on course' },
 ];
