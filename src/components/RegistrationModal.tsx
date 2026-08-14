@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { closeRegistrationModal, goToStep, resetRegistration } from '../store/registrationSlice';
+import { closeRegistrationModal, clearPendingPayment, goToStep, resetRegistration } from '../store/registrationSlice';
 import Modal from './Modal';
 import StepDetails from './StepDetails';
 import StepPayment from './StepPayment';
@@ -22,6 +22,12 @@ export default function RegistrationModal() {
     dispatch(closeRegistrationModal());
     if (step === 'done') {
       dispatch(resetRegistration());
+    } else if (step === 'processing') {
+      // Abandoning a payment mid-wait — same as "Try a different method" on
+      // timeout/failure. Without this, the stale pendingPayment (and its
+      // now-wrong provider logo) survives and resumes on the next open.
+      dispatch(clearPendingPayment());
+      dispatch(goToStep('payment'));
     }
   }
 

@@ -16,8 +16,8 @@ export const RACE_CATEGORIES: { value: RaceCategory; label: string; distance: st
   { value: '5k-fun-run', label: 'Fun Run & Walk', distance: '5 KM', fee: 279 },
   { value: 'mining-challenge', label: 'Mining Challenge', distance: '' },
   { value: 'differently-abled', label: 'Differently Abled Challenge', distance: '' },
-  { value: 'schools-youth', label: 'Schools & Youth Challenge', distance: '5 KM', fee: 80 },
-  { value: 'veterans', label: 'Veterans Challenge', distance: '10 KM', fee: 200 },
+  { value: 'schools-youth', label: 'Schools & Youth Challenge', distance: '', fee: 80 },
+  { value: 'veterans', label: 'Veterans Challenge', distance: '', fee: 200 },
 ];
 
 export type Gender = '' | 'male' | 'female';
