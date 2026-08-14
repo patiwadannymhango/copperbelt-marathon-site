@@ -67,8 +67,8 @@ export default function Home() {
             <span>{EVENT.date}</span>
             <span className="dot">·</span>
             <span>{EVENT.venue}</span>
-            <span className="dot">·</span>
-            <span>{lowestFee ? `From K${lowestFee} entry` : 'Loading entry fees…'}</span>
+            {/* <span className="dot">·</span>
+            <span>{lowestFee ? `From K${lowestFee} entry` : 'Loading entry fees…'}</span> */}
           </div>
 
           <div className="hero-distances">
