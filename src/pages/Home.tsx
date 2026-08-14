@@ -39,9 +39,9 @@ export default function Home() {
     return price > 0 ? price : null;
   }
 
-  const lowestFee = categories
-    ? Math.min(...categories.map((c) => Number(c.price)).filter((p) => p > 0))
-    : null;
+  // const lowestFee = categories
+  //   ? Math.min(...categories.map((c) => Number(c.price)).filter((p) => p > 0))
+  //   : null;
 
   return (
     <main>
