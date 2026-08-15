@@ -1602,7 +1602,7 @@ textarea {
 }
 
 .sponsor-card img {
-  max-height: 90px;
+  max-height: 140px;
   max-width: 100%;
   object-fit: contain;
   margin-bottom: 14px;
@@ -1631,7 +1631,7 @@ textarea {
 }
 
 .trust-strip img {
-  height: 44px;
+  height: 64px;
   width: auto;
   border-radius: 6px;
   background: var(--logo-chip);
@@ -1727,7 +1727,7 @@ textarea {
 }
 
 .sponsor-strip-top .trust-strip img {
-  height: 32px;
+  height: 48px;
 }
 
 .spinner {
