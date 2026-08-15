@@ -10,6 +10,9 @@ import type { BackendCategory } from '../api/registrationApi';
 import Reveal from '../components/Reveal';
 import CounterStat from '../components/CounterStat';
 import TrackRegistration from '../components/TrackRegistration';
+import merchCap from '../assets/merch-cap.jpg';
+import merchBag from '../assets/merch-bag.jpg';
+import merchShirt from '../assets/merch-shirt.jpg';
 
 const logos = import.meta.glob('../assets/logos/*.{png,jpg}', { eager: true, import: 'default' }) as Record<string, string>;
 
@@ -58,6 +61,15 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-bg" aria-hidden="true" />
+
+        <div className="hero-side hero-side-left" aria-hidden="true">
+          <img src={merchCap} alt="" loading="lazy" />
+          <img src={merchBag} alt="" loading="lazy" />
+        </div>
+        <div className="hero-side hero-side-right" aria-hidden="true">
+          <img src={merchShirt} alt="" loading="lazy" />
+        </div>
+
         <div className="hero-inner">
           <div className="eyebrow eyebrow-lg">Inaugural edition · {EVENT.venue}</div>
           <h1>One Copperbelt. One finish line.</h1>
