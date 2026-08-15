@@ -203,9 +203,6 @@ main {
   height: 40px;
   width: auto;
   border-radius: 6px;
-  background: var(--logo-chip);
-  padding: 6px 10px;
-  border: 1px solid var(--line);
 }
 
 .footer-links {
@@ -721,7 +718,7 @@ textarea {
 }
 
 .hero-side-right img {
-  width: 220px;
+  width: 280px;
 }
 
 @media (max-width: 1180px) {
@@ -1646,8 +1643,6 @@ textarea {
   object-fit: contain;
   margin-bottom: 14px;
   border-radius: 6px;
-  background: var(--logo-chip);
-  padding: 10px 14px;
 }
 
 .sponsor-name {
@@ -1673,8 +1668,6 @@ textarea {
   height: 64px;
   width: auto;
   border-radius: 6px;
-  background: var(--logo-chip);
-  padding: 6px 10px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
