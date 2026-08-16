@@ -21,7 +21,7 @@ export const RACE_CATEGORIES: { value: RaceCategory; label: string; distance: st
 ];
 
 export type Gender = '' | 'male' | 'female';
-export type AgeRange = '' | 'under-18' | '18-29' | '30-39' | '40-49' | '50-59' | '60-plus';
+export type AgeRange = '' | 'Under 18' | '18-29' | '30-39' | '40-49' | '50-59' | '60+';
 export type TShirtSize = '' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | '3XL' | '4XL' | '5XL';
 export type AttendanceType = 'in-person' | 'virtual';
 export type PaymentMethod = 'mobile-money' | 'card';

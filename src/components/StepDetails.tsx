@@ -97,12 +97,12 @@ export default function StepDetails() {
         <Field label="Age range">
           <select value={details.ageRange} onChange={(e) => handleChange('ageRange', e.target.value as typeof details.ageRange)}>
             <option value="">Select</option>
-            <option value="under-18">Under 18</option>
+            <option value="Under 18">Under 18</option>
             <option value="18-29">18–29</option>
             <option value="30-39">30–39</option>
             <option value="40-49">40–49</option>
             <option value="50-59">50–59</option>
-            <option value="60-plus">60+</option>
+            <option value="60+">60+</option>
           </select>
         </Field>
         <Field label="T-shirt size">

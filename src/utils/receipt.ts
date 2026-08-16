@@ -8,12 +8,12 @@ const LINE: [number, number, number] = [225, 218, 210];
 
 const GENDER_LABEL: Record<string, string> = { male: 'Male', female: 'Female' };
 const AGE_LABEL: Record<string, string> = {
-  'under-18': 'Under 18',
+  'Under 18': 'Under 18',
   '18-29': '18–29',
   '30-39': '30–39',
   '40-49': '40–49',
   '50-59': '50–59',
-  '60-plus': '60+',
+  '60+': '60+',
 };
 const STATUS_LABEL: Record<string, string> = {
   confirmed: 'Confirmed',
