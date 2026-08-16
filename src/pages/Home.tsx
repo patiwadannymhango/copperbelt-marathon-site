@@ -42,6 +42,7 @@ export default function Home() {
     return price > 0 ? price : null;
   }
 
+  
   // const lowestFee = categories
   //   ? Math.min(...categories.map((c) => Number(c.price)).filter((p) => p > 0))
   //   : null;
@@ -84,11 +85,17 @@ export default function Home() {
           </div>
 
           <div className="hero-distances">
-            {DISTANCES.map((d) => (
-              <span key={d.code} className="hero-distance-pill">
-                <strong>{d.code}</strong> {d.label}
-              </span>
-            ))}
+            {DISTANCES.map((d) => {
+              const fee = feeFor(d.categoryCode);
+              return (
+                <span key={d.code} className="hero-distance-pill">
+                  <span className="hero-distance-pill-main">
+                    <strong>{d.code}</strong> {d.label}
+                  </span>
+                  <span className="hero-distance-pill-fee">{fee ? `K${fee}` : ' '}</span>
+                </span>
+              );
+            })}
           </div>
 
           <div className="hero-cta">
