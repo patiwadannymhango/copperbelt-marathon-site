@@ -1,11 +1,24 @@
+import { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
+import { downloadReceipt } from '../utils/receipt';
+import Spinner from './Spinner';
 
 export default function StepDone({ onClose }: { onClose: () => void }) {
   const record = useAppSelector((s) => s.registration.record);
+  const [downloading, setDownloading] = useState(false);
 
   if (!record) return null;
 
   const pendingBankTransfer = record.status === 'pending-bank-transfer';
+
+  async function handleDownload() {
+    setDownloading(true);
+    try {
+      await downloadReceipt(record!);
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   return (
     <div className="modal-form center">
@@ -28,9 +41,20 @@ export default function StepDone({ onClose }: { onClose: () => void }) {
         </span>
       </div>
 
-      <button className="btn-primary btn-full" onClick={onClose}>
-        Done
-      </button>
+      <div className="actions actions-stack">
+        <button className="btn-ghost btn-full" onClick={handleDownload} disabled={downloading}>
+          {downloading ? (
+            <span className="btn-loading">
+              <Spinner size={14} /> Preparing receipt…
+            </span>
+          ) : (
+            'Download receipt'
+          )}
+        </button>
+        <button className="btn-primary btn-full" onClick={onClose}>
+          Done
+        </button>
+      </div>
     </div>
   );
 }

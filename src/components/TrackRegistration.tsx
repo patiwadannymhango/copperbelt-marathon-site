@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
 import type { RegistrationRecord } from '../types';
 import { searchRegistration } from '../api/registrationApi';
+import { downloadReceipt } from '../utils/receipt';
 import Spinner from './Spinner';
 
 export default function TrackRegistration() {
@@ -9,6 +10,7 @@ export default function TrackRegistration() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<RegistrationRecord | null | 'not-found'>(null);
   const [searching, setSearching] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   async function handleSearch() {
     const q = query.trim();
@@ -17,6 +19,15 @@ export default function TrackRegistration() {
     const match = await searchRegistration(q, records);
     setResult(match ?? 'not-found');
     setSearching(false);
+  }
+
+  async function handleDownload(record: RegistrationRecord) {
+    setDownloading(true);
+    try {
+      await downloadReceipt(record);
+    } finally {
+      setDownloading(false);
+    }
   }
 
   return (
@@ -51,6 +62,17 @@ export default function TrackRegistration() {
           <div className="summary-row"><span>Name</span><strong>{result.details.fullName}</strong></div>
           <div className="summary-row"><span>Race category</span><strong>{result.details.raceCategory}</strong></div>
           <div className="summary-row"><span>Submitted</span><strong>{new Date(result.submittedAt).toLocaleString()}</strong></div>
+          <div className="actions">
+            <button className="btn-ghost btn-full" onClick={() => handleDownload(result)} disabled={downloading}>
+              {downloading ? (
+                <span className="btn-loading">
+                  <Spinner size={14} /> Preparing receipt…
+                </span>
+              ) : (
+                'Download receipt'
+              )}
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -60,6 +60,8 @@ export interface RegistrationRecord {
   payment: PaymentInfo;
   status: RegistrationStatus;
   submittedAt: string;
+  amount?: number | null;
+  currency?: string;
 }
 
 /** A mobile money or card payment that's been sent to Lipila and is

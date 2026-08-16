@@ -102,6 +102,8 @@ const registrationSlice = createSlice({
         payment: state.payment,
         status: action.payload.status,
         submittedAt: new Date().toISOString(),
+        amount: state.pendingPayment?.amount ?? null,
+        currency: state.pendingPayment?.currency ?? '',
       };
       state.record = record;
       state.submittedRecords.push(record);
