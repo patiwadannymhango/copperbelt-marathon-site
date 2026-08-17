@@ -42,7 +42,7 @@ export default function Home() {
     return price > 0 ? price : null;
   }
 
-  
+
   // const lowestFee = categories
   //   ? Math.min(...categories.map((c) => Number(c.price)).filter((p) => p > 0))
   //   : null;
@@ -51,7 +51,7 @@ export default function Home() {
     <main>
       <section className="sponsor-strip-top">
         <div className="section-inner sponsor-strip-top-inner">
-          <span className="footer-label">Official partners</span>
+          <span className="footer-label">Official partners TEST</span>
           <div className="trust-strip">
             {SPONSORS.map((s, i) => (
               <Reveal as="img" key={s.name} delay={i * 80} src={logoSrc(s.file)} alt={s.name} title={s.name} />
