@@ -6,7 +6,7 @@ export const EVENT = {
   venue: 'ECL Mall, Kitwe',
   prizeFund: 'K500,000',
   phone: '+260 764 915 118',
-  email: 'info@copperbeltmarathon2026.org',
+  email: 'copperbeltmarathon@gmail.com',
   runnersExpected: '6,000+',
   courseLimit: '6h 15m',
 };
@@ -88,4 +88,6 @@ export const SPONSORS = [
   { name: 'Vatra Mineral Water', file: 'vatra.png', tier: 'Hydration partner' },
   { name: 'Zambia Athletics', file: 'za.png', tier: 'Governing body' },
   { name: 'Kwendura Infinity Corporation', file: 'kwendura.jpg', tier: 'Official partner' },
+  { name: 'Enax Technology Limited', file: 'enax-logo.png', tier: 'Technology partner' },
+  { name: 'Limitless Consultancy and Research Limited', file: 'limitess-logo.png', tier: 'Technology partner' },
 ];
