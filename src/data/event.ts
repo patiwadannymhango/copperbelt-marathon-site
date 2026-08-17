@@ -89,5 +89,5 @@ export const SPONSORS = [
   { name: 'Zambia Athletics', file: 'za.png', tier: 'Governing body' },
   { name: 'Kwendura Infinity Corporation', file: 'kwendura.jpg', tier: 'Official partner' },
   { name: 'Enax Technology Limited', file: 'enax-logo.png', tier: 'Technology partner' },
-  { name: 'Limitless Consultancy and Research Limited', file: 'limitess-logo.png', tier: 'Technology partner' },
+  { name: 'Limitless Consultancy and Research Limited', file: 'limitless-logo.png', tier: 'Offical partner' },
 ];
