@@ -588,6 +588,31 @@ textarea {
   transform: translateY(-1px);
 }
 
+.btn-vendor {
+  background: var(--gold);
+  color: var(--on-light);
+  border: none;
+  border-radius: 6px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px rgba(122, 92, 24, 0.15);
+}
+
+.btn-vendor:hover {
+  background: #c49a4a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(122, 92, 24, 0.25);
+}
+
+.btn-vendor:active {
+  transform: translateY(0);
+}
+
 .actions {
   display: flex;
   gap: 12px;

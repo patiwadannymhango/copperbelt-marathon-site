@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { EVENT, DISTANCES, COUNTERS, PRIZE_ITEMS, PACKAGE_ITEMS, SPONSORS } from '../data/event';
 import { useCountdown } from '../hooks/useCountdown';
 import { useReveal } from '../hooks/useReveal';
@@ -103,6 +104,7 @@ export default function Home() {
               Register now
             </button>
             <a href="#races" className="btn-ghost">See race categories</a>
+            <Link to="/vendors" className="btn-vendor">Vendor / Exhibitor registration</Link>
           </div>
 
           <div className="countdown">
