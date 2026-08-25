@@ -45,7 +45,7 @@ export default function Layout() {
             <NavLink to="/vendors">Vendors</NavLink>
           </nav>
           <button type="button" className="btn-primary btn-sm" onClick={() => dispatch(openRegistrationModal())}>
-            Register
+            Runner Register
           </button>
         </div>
       </header>
