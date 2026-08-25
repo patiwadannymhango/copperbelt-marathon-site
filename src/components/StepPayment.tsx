@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { updatePayment, goToStep, setPendingPayment } from '../store/registrationSlice';
+import { updatePayment, goToStep, setActiveRegistration, setPendingPayment } from '../store/registrationSlice';
 import { RACE_CATEGORIES } from '../types';
 import type { MobileMoneyProvider } from '../types';
-import { fetchRaceFee, submitRegistrationDetails, initiatePayment } from '../api/registrationApi';
+import {
+  fetchRaceFee,
+  submitRegistrationDetails,
+  initiatePayment,
+  type SubmitRegistrationResult,
+} from '../api/registrationApi';
 import { MtnLogo, AirtelLogo, ZamtelLogo, VisaLogo, MastercardLogo, AmexLogo } from './PaymentLogos';
 import Spinner from './Spinner';
 
@@ -15,7 +20,7 @@ const PROVIDERS: { value: MobileMoneyProvider; label: string; Logo: typeof MtnLo
 
 export default function StepPayment() {
   const dispatch = useAppDispatch();
-  const { details, payment } = useAppSelector((s) => s.registration);
+  const { details, payment, activeRegistration } = useAppSelector((s) => s.registration);
   const category = RACE_CATEGORIES.find((c) => c.value === details.raceCategory);
 
   const [fee, setFee] = useState<number | null | undefined>(undefined);
@@ -63,7 +68,32 @@ export default function StepPayment() {
 
     setSubmitting(true);
     try {
-      const registration = await submitRegistrationDetails(details);
+      // Retrying after a failed payment (came back here without touching
+      // "details") reuses the registration already created for this
+      // attempt instead of creating a fresh one every time — otherwise
+      // every declined payment / unentered PIN leaves behind a permanent
+      // abandoned registration, and a runner who fails a few times before
+      // succeeding shows up as several "unconfirmed" entries instead of
+      // one.
+      const registration: SubmitRegistrationResult = activeRegistration
+        ? {
+            registrationId: activeRegistration.id,
+            reference: activeRegistration.reference,
+            amount: activeRegistration.amount,
+            currency: activeRegistration.currency,
+          }
+        : await submitRegistrationDetails(details);
+
+      if (!activeRegistration) {
+        dispatch(
+          setActiveRegistration({
+            id: registration.registrationId,
+            reference: registration.reference,
+            amount: registration.amount,
+            currency: registration.currency,
+          })
+        );
+      }
 
       if (payment.method === 'card') {
         const backUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
