@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Races from './pages/Races';
 import Sponsors from './pages/Sponsors';
+import Vendors from './pages/Vendors';
 import SplashLoader from './components/SplashLoader';
 import './App.css';
 
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/races" element={<Races />} />
           <Route path="/sponsors" element={<Sponsors />} />
+          <Route path="/vendors" element={<Vendors />} />
         </Route>
       </Routes>
     </BrowserRouter>
