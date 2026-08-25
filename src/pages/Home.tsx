@@ -101,7 +101,7 @@ export default function Home() {
 
           <div className="hero-cta">
             <button type="button" className="btn-primary" onClick={() => dispatch(openRegistrationModal())}>
-              Register now
+              Runner / Participant Register now
             </button>
             <a href="#races" className="btn-ghost">See race categories</a>
             <Link to="/vendors" className="btn-vendor">Vendor / Exhibitor registration</Link>
