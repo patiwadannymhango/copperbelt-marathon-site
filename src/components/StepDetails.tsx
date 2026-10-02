@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { updateDetails, goToStep } from '../store/registrationSlice';
 import { RACE_CATEGORIES } from '../types';
-import { fetchRaceFee } from '../api/registrationApi';
+import { fetchRaceFee, fetchRaceCategories } from '../api/registrationApi';
+import type { BackendCategory } from '../api/registrationApi';
 import Spinner from './Spinner';
 
 export default function StepDetails() {
@@ -13,6 +14,21 @@ export default function StepDetails() {
 
   const [fee, setFee] = useState<number | null>(null);
   const [feeLoading, setFeeLoading] = useState(false);
+
+  // Drives the "— Sold out" disabling below — fetched once (same cached
+  // promise fetchRaceFee uses) rather than trusting anything baked into
+  // the frontend bundle, since capacity fills up over the life of the event.
+  const [backendCategories, setBackendCategories] = useState<BackendCategory[]>([]);
+
+  useEffect(() => {
+    fetchRaceCategories()
+      .then(setBackendCategories)
+      .catch(() => setBackendCategories([]));
+  }, []);
+
+  function isSoldOut(code: string): boolean {
+    return backendCategories.find((c) => c.code === code)?.sold_out ?? false;
+  }
 
   useEffect(() => {
     if (!details.raceCategory) {
@@ -39,6 +55,10 @@ export default function StepDetails() {
   function handleContinue() {
     if (!details.fullName || !details.email || !details.phone || !details.raceCategory) {
       setError('Please fill in name, email, phone and race category.');
+      return;
+    }
+    if (isSoldOut(details.raceCategory)) {
+      setError('That race category is full. Please pick a different one.');
       return;
     }
     if (details.attendanceType === 'in-person' && !details.emergencyContactPhone) {
@@ -117,7 +137,9 @@ export default function StepDetails() {
           <select value={details.raceCategory} onChange={(e) => handleChange('raceCategory', e.target.value as typeof details.raceCategory)}>
             <option value="">Select your race</option>
             {RACE_CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>{c.label} — {c.distance}</option>
+              <option key={c.value} value={c.value} disabled={isSoldOut(c.value)}>
+                {c.label} — {c.distance}{isSoldOut(c.value) ? ' (Sold out)' : ''}
+              </option>
             ))}
           </select>
         </Field>

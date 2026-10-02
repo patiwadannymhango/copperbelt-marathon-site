@@ -30,6 +30,7 @@ export interface BackendCategory {
   code: string;
   price: string | number;
   currency: string;
+  sold_out: boolean;
 }
 
 interface BackendForm {
