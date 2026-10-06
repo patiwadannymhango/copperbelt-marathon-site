@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
-import type { RegistrationRecord } from '../types';
+import { RACE_CATEGORIES, type RegistrationRecord } from '../types';
 import { searchRegistration } from '../api/registrationApi';
 import { downloadReceipt } from '../utils/receipt';
 import Spinner from './Spinner';
+
+function formatRaceCategory(value: RegistrationRecord['details']['raceCategory']): string {
+  const category = RACE_CATEGORIES.find((c) => c.value === value);
+  if (!category) return '—';
+  return category.distance ? `${category.label} (${category.distance})` : category.label;
+}
 
 export default function TrackRegistration() {
   const records = useAppSelector((s) => s.registration.submittedRecords);
@@ -60,7 +66,9 @@ export default function TrackRegistration() {
             </strong>
           </div>
           <div className="summary-row"><span>Name</span><strong>{result.details.fullName}</strong></div>
-          <div className="summary-row"><span>Race category</span><strong>{result.details.raceCategory}</strong></div>
+          <div className="summary-row"><span>Race category</span><strong>{formatRaceCategory(result.details.raceCategory)}</strong></div>
+          <div className="summary-row"><span>T-shirt size</span><strong>{result.details.tShirtSize || '—'}</strong></div>
+          <div className="summary-row"><span>Attendance</span><strong>{result.details.attendanceType === 'virtual' ? 'Virtual' : 'In person'}</strong></div>
           <div className="summary-row"><span>Submitted</span><strong>{new Date(result.submittedAt).toLocaleString()}</strong></div>
           <div className="actions">
             <button className="btn-ghost btn-full" onClick={() => handleDownload(result)} disabled={downloading}>
