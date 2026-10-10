@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import { RACE_CATEGORIES } from '../types';
-import { useAppDispatch } from '../store/hooks';
-import { openRegistrationModal } from '../store/registrationSlice';
 import { fetchRaceCategories } from '../api/registrationApi';
 import type { BackendCategory } from '../api/registrationApi';
 import Reveal from '../components/Reveal';
 import Spinner from '../components/Spinner';
 
 export default function Races() {
-  const dispatch = useAppDispatch();
   const [categories, setCategories] = useState<BackendCategory[] | null>(null);
 
   useEffect(() => {
@@ -48,13 +45,6 @@ export default function Races() {
         </div>
       </section>
 
-      <section className="cta-band">
-        <h2>Ready when you are</h2>
-        <p>Choose a category and complete your registration in minutes.</p>
-        <button type="button" className="btn-cta-light" onClick={() => dispatch(openRegistrationModal())}>
-          Register now
-        </button>
-      </section>
     </main>
   );
 }

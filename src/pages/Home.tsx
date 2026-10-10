@@ -4,8 +4,6 @@ import { EVENT, DISTANCES, COUNTERS, PRIZE_ITEMS, PACKAGE_ITEMS, SPONSORS } from
 import { useCountdown } from '../hooks/useCountdown';
 import { useReveal } from '../hooks/useReveal';
 import { useCountUp } from '../hooks/useCountUp';
-import { useAppDispatch } from '../store/hooks';
-import { openRegistrationModal } from '../store/registrationSlice';
 import { fetchRaceCategories } from '../api/registrationApi';
 import type { BackendCategory } from '../api/registrationApi';
 import Reveal from '../components/Reveal';
@@ -23,7 +21,6 @@ function logoSrc(file: string): string {
 }
 
 export default function Home() {
-  const dispatch = useAppDispatch();
   const { days, hours, minutes, seconds } = useCountdown(EVENT.isoDate);
   const { ref: prizeRef, visible: prizeVisible } = useReveal(0.4);
   const prizeValue = useCountUp(500000, prizeVisible, 1600);
@@ -100,9 +97,6 @@ export default function Home() {
           </div>
 
           <div className="hero-cta">
-            <button type="button" className="btn-primary" onClick={() => dispatch(openRegistrationModal())}>
-              Runner Register now
-            </button>
             <a href="#races" className="btn-ghost">See race categories</a>
             <Link to="/vendors" className="btn-vendor">Vendor Registration</Link>
           </div>
@@ -156,9 +150,6 @@ export default function Home() {
             <div className="eyebrow">Be part of it</div>
             <div className="prize-amount">K{prizeValue.toLocaleString()}</div>
             <p className="lede">in prize money and rewards, shared across every race category.</p>
-            <button type="button" className="btn-on-prize" onClick={() => dispatch(openRegistrationModal())}>
-              Register to compete
-            </button>
           </div>
           <div className="prize-table">
             {PRIZE_ITEMS.map((p) => (
@@ -175,9 +166,6 @@ export default function Home() {
               <div className="eyebrow">Registration</div>
               <h2>One entry. Everything included.</h2>
               <p className="lede">Secure your place and pay by mobile money — your bib number and confirmation arrive by email.</p>
-              <button type="button" className="btn-primary" onClick={() => dispatch(openRegistrationModal())}>
-                Register now
-              </button>
             </Reveal>
             <Reveal as="div" delay={100} className="reg-panel-package">
               <span className="footer-label">Your race pack includes</span>

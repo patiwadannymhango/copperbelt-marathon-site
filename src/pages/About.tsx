@@ -1,11 +1,7 @@
 import { EVENT } from '../data/event';
-import { useAppDispatch } from '../store/hooks';
-import { openRegistrationModal } from '../store/registrationSlice';
 import Reveal from '../components/Reveal';
 
 export default function About() {
-  const dispatch = useAppDispatch();
-
   return (
     <main>
       <section className="page-hero">
@@ -28,13 +24,6 @@ export default function About() {
         </div>
       </section>
 
-      <section className="cta-band">
-        <h2>Ready to join?</h2>
-        <p>Pick your distance and lock in your entry.</p>
-        <button type="button" className="btn-cta-light" onClick={() => dispatch(openRegistrationModal())}>
-          Register now
-        </button>
-      </section>
     </main>
   );
 }
